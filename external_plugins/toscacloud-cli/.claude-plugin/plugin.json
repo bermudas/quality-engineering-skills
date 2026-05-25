@@ -1,0 +1,9 @@
+{
+  "name": "toscacloud-cli",
+  "description": "AI-native command-line interface for Tricentis Tosca Cloud. Bundles a Tosca Cloud MCP server, a Playwright MCP, and Claude Code skills that drive the CLI for creating, running, and inspecting cloud test executions.",
+  "author": {
+    "name": "Alexander Bychinskiy",
+    "url": "https://github.com/bermudas"
+  },
+  "homepage": "https://github.com/bermudas/toscacloud_cli"
+}

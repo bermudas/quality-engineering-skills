@@ -1,0 +1,9 @@
+{
+  "name": "qaspace-skill",
+  "description": "Agent skill for the EPAM qaspace Test Management Plugin on Jira Server/DC. Teaches your agent how to discover custom-field IDs, resolve test runs by name or id, build folder trees, triage runs for automation, paginate large runs economically, and avoid plugin footguns. Transport-agnostic — works via MCP, REST, or curl.",
+  "author": {
+    "name": "Alexander Bychinskiy",
+    "url": "https://github.com/bermudas"
+  },
+  "homepage": "https://github.com/bermudas/qaspace-skill"
+}

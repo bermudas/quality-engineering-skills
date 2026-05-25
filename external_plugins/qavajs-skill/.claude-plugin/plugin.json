@@ -1,0 +1,9 @@
+{
+  "name": "qavajs-skill",
+  "description": "Agent skill for the qavajs BDD test automation framework — 270 step patterns indexed, full configuration and DSL reference, and a Playwright MCP bundled for browser interactions. Use when bootstrapping a qavajs project, authoring step definitions, or debugging test runs.",
+  "author": {
+    "name": "Alexander Bychinskiy",
+    "url": "https://github.com/bermudas"
+  },
+  "homepage": "https://github.com/bermudas/qavajs-skill"
+}

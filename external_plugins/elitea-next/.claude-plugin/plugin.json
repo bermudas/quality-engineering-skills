@@ -1,0 +1,9 @@
+{
+  "name": "elitea-next",
+  "description": "Connect Claude Code to an EPAM ELITEA Next project over SSE. Reads project id and bearer token from a local .env file so the same plugin works across multiple projects/tenants without editing config.",
+  "author": {
+    "name": "Alexander Bychinskiy",
+    "url": "https://github.com/bermudas"
+  },
+  "homepage": "https://elitea.ai"
+}

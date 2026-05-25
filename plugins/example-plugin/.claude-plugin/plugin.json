@@ -1,0 +1,8 @@
+{
+  "name": "example-plugin",
+  "description": "Reference template for plugins authored directly in this marketplace. Copy this directory, rename it, and edit the metadata, skills, commands, agents, and .mcp.json to suit your plugin. Demonstrates every supported plugin asset type so you can delete what you don't need.",
+  "author": {
+    "name": "Alexander Bychinskiy",
+    "url": "https://github.com/bermudas"
+  }
+}

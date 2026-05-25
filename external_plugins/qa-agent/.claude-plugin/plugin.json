@@ -1,0 +1,9 @@
+{
+  "name": "qa-agent",
+  "description": "Composable QA agent for AI coding assistants — multi-specialist analysis, exploratory testing, accessibility, security, test generation. Includes a /qa-init onboarding pipeline that ingests your codebase, docs, and test infra into a project context the agent uses. This is a wrapper plugin — install runs the upstream `npx github:onetest-ai/qa-agent init` interactive installer.",
+  "author": {
+    "name": "onetest-ai",
+    "url": "https://github.com/onetest-ai"
+  },
+  "homepage": "https://github.com/onetest-ai/qa-agent"
+}

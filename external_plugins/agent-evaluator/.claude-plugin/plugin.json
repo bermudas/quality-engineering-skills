@@ -1,0 +1,9 @@
+{
+  "name": "agent-evaluator",
+  "description": "Evaluate AI agent specifications against the Agent Maturity Model (L0–L3, 39 practices across 9 categories) and produce a styled HTML maturity assessment report. Triggers on phrases like 'evaluate this agent', 'score these agents', 'how mature is X', 'audit the agent suite in folder Y'. Always asks clarifying questions about platform-side concerns (token tracking, eval suite, observability, audit logs) before scoring, so they aren't mis-marked as gaps.",
+  "author": {
+    "name": "Dmitry Shaplyko",
+    "url": "https://github.com/dshaplyko"
+  },
+  "homepage": "https://github.com/dshaplyko/skills/tree/main/.claude/skills/agent-evaluator"
+}

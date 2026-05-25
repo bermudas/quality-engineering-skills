@@ -1,0 +1,9 @@
+{
+  "name": "vividus-skill",
+  "description": "Agent skill for the Vividus test automation framework — bootstrap a project, configure profiles and environments, author scenarios, and run suites. Bundles a Playwright MCP so the agent can interact with browser-based steps while authoring.",
+  "author": {
+    "name": "Alexander Bychinskiy",
+    "url": "https://github.com/bermudas"
+  },
+  "homepage": "https://github.com/bermudas/vividus-skill"
+}

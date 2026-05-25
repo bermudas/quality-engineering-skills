@@ -1,0 +1,9 @@
+{
+  "elitea-next": {
+    "type": "sse",
+    "url": "https://next.elitea.ai/app/${ELITEA_PROJECT_ID}/sse",
+    "headers": {
+      "Authorization": "Bearer ${ELITEA_TOKEN}"
+    }
+  }
+}

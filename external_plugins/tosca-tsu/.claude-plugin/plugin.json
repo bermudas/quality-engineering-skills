@@ -1,0 +1,9 @@
+{
+  "name": "tosca-tsu",
+  "description": "Bidirectional bridge between Tricentis Tosca `.tsu` test bundles and Playwright TypeScript specs. Generate `.tsu` from Playwright, parse `.tsu` into Playwright, and drive the browser via a bundled Playwright MCP. Ships Claude Code skills plus Playwright MCP configs for VS Code, Copilot, and Copilot CLI.",
+  "author": {
+    "name": "Alexander Bychinskiy",
+    "url": "https://github.com/bermudas"
+  },
+  "homepage": "https://github.com/bermudas/ToscaTSU"
+}

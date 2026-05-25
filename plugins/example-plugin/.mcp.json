@@ -1,0 +1,10 @@
+{
+  "example-server": {
+    "type": "stdio",
+    "command": "npx",
+    "args": ["-y", "@example/mcp-server@latest"],
+    "env": {
+      "EXAMPLE_API_KEY": "${EXAMPLE_API_KEY}"
+    }
+  }
+}
