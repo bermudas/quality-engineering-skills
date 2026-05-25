@@ -1,0 +1,44 @@
+name: Build Check
+
+# marketplace.json is generated from scripts/marketplace-sources.json.
+# This job re-runs the generator and fails if the committed file drifts
+# from what the script produces — catches PRs that hand-edit the output
+# instead of the sources.
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/marketplace-sources.json'
+      - 'scripts/build-marketplace.py'
+      - '.claude-plugin/marketplace.json'
+      - '.github/workflows/build-check.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/**'
+      - '.claude-plugin/marketplace.json'
+
+permissions:
+  contents: read
+
+jobs:
+  build-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Regenerate marketplace.json
+        run: python3 scripts/build-marketplace.py
+
+      - name: Verify committed file matches generator output
+        run: |
+          if ! git diff --exit-code .claude-plugin/marketplace.json; then
+            echo ""
+            echo "::error::marketplace.json is out of sync with scripts/marketplace-sources.json."
+            echo "::error::Run 'python3 scripts/build-marketplace.py' locally and commit the result."
+            exit 1
+          fi

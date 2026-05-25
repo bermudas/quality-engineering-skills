@@ -1,0 +1,100 @@
+name: Bump Upstream SHAs
+
+# Nightly sweep: for each external entry in scripts/marketplace-sources.json,
+# query GitHub for the current HEAD sha of its ref. If the sha has moved,
+# bump it, regenerate marketplace.json, validate inline with `claude plugin
+# validate`, and open a PR. If validation passes, the PR is auto-merged
+# immediately (the bump workflow is the only quality gate — we already
+# validated the new state).
+#
+# A failing validate leaves the PR open for manual review and aborts the
+# auto-merge.
+
+on:
+  schedule:
+    # 06:00 UTC daily
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: bump-upstreams
+  cancel-in-progress: false
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Detect upstream SHA bumps
+        id: bump
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python3 .github/scripts/bump_upstreams.py
+          if git diff --quiet scripts/marketplace-sources.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No upstream SHAs moved. Done."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "Changes detected — regenerating marketplace.json."
+          fi
+
+      - name: Regenerate marketplace.json
+        if: steps.bump.outputs.changed == 'true'
+        run: python3 scripts/build-marketplace.py
+
+      - name: Validate
+        if: steps.bump.outputs.changed == 'true'
+        uses: anthropics/claude-plugins-community/.github/actions/validate-plugins@f846a0bcb0e721b1f93d60e8b73e91dafc4a1e87
+        with:
+          marketplace-path: .claude-plugin/marketplace.json
+          claude-cli-version: latest
+
+      - name: Open PR and merge
+        if: steps.bump.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          # Configure the GitHub Actions bot as the committer.
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          BRANCH="bump/upstream-shas"
+
+          # Force-reset the branch so we always have a fresh single commit
+          # representing tonight's bumps. Discards an unmerged previous PR.
+          git checkout -B "$BRANCH"
+          git add scripts/marketplace-sources.json .claude-plugin/marketplace.json
+          git commit -m "Bump upstream SHAs (automated)"
+          git push --force origin "$BRANCH"
+
+          # Close any prior bump PRs so we don't pile them up.
+          for pr in $(gh pr list --head "$BRANCH" --state open --json number --jq '.[].number'); do
+            gh pr close "$pr" --comment "Superseded by tonight's bump." --delete-branch=false || true
+          done
+
+          PR_URL=$(gh pr create \
+            --base main \
+            --head "$BRANCH" \
+            --title "Bump upstream SHAs (automated)" \
+            --body "Automated nightly sweep — see [bump-upstreams.yml](.github/workflows/bump-upstreams.yml). Inline validation already passed; this PR will auto-merge.")
+
+          echo "Opened: $PR_URL"
+
+          # We already validated inline, so merge immediately. --squash keeps
+          # main linear; --delete-branch cleans up the bump branch on merge.
+          gh pr merge "$PR_URL" --squash --delete-branch

@@ -1,0 +1,39 @@
+name: Validate Frontmatter
+
+# Checks YAML frontmatter on every skill/agent/command markdown file in the
+# tree. Catches missing `name`/`description` and malformed YAML before they
+# reach Claude Code's loader.
+
+on:
+  pull_request:
+    paths:
+      - '**/agents/*.md'
+      - '**/skills/*/SKILL.md'
+      - '**/commands/*.md'
+      - '.github/scripts/validate_frontmatter.py'
+      - '.github/workflows/validate-frontmatter.yml'
+  push:
+    branches: [main]
+    paths:
+      - '**/agents/*.md'
+      - '**/skills/*/SKILL.md'
+      - '**/commands/*.md'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install PyYAML
+        run: python3 -m pip install --quiet 'pyyaml>=6,<7'
+
+      - name: Validate frontmatter
+        run: python3 .github/scripts/validate_frontmatter.py
