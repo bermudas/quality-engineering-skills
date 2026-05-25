@@ -59,6 +59,26 @@ def relative_subpath(source: str) -> str:
     return s.rstrip("/")
 
 
+def kind_prefix_for(subpath: str) -> str:
+    """Tag mirrored upstream entries so the `/plugin` picker shows at a glance
+    whether a row is the umbrella bundle or a single drilled-down component.
+
+    Heuristic from the upstream source path:
+      ""           -> [Bundle]  (root install — usually carries .mcp.json + all components)
+      agents/...   -> [Agent]
+      skills/...   -> [Skill]
+      anything else -> no prefix
+    """
+    if subpath == "":
+        return "[Bundle] "
+    first = subpath.split("/", 1)[0]
+    if first == "agents":
+        return "[Agent] "
+    if first == "skills":
+        return "[Skill] "
+    return ""
+
+
 def emit_from_upstream(
     plugin: dict[str, Any],
     upstream_repo_url: str,
@@ -92,7 +112,7 @@ def emit_from_upstream(
 
     entry: dict[str, Any] = {
         "name": plugin["name"],
-        "description": plugin.get("description", ""),
+        "description": kind_prefix_for(subpath) + plugin.get("description", ""),
     }
     if author_override:
         entry["author"] = author_override
