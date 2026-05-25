@@ -17,20 +17,37 @@ The `.mcp.json` references two environment variables, so the same plugin works a
 
 ## Configure
 
-Copy `.env.example` to `.env` in your project root and fill in the two values:
+Copy `.env.example` to `.env` in your project root:
 
 ```bash
 cp .env.example .env
 $EDITOR .env
 ```
 
-That's it — no need to `source` anything. The plugin's `.mcp.json` runs a small `sh -c` wrapper that:
+The two values are loaded differently because Claude Code's `.mcp.json` semantics are different for each field:
 
-1. `grep`s `ELITEA_PROJECT_ID` and `ELITEA_TOKEN` out of `./.env` (the project root where you launch Claude Code),
-2. Substitutes them into the ELITEA URL and `Authorization: Bearer` header,
-3. Bridges the SSE endpoint to stdio via [`mcp-remote`](https://www.npmjs.com/package/mcp-remote) so Claude Code can talk to it.
+| Variable | How it's loaded | Why |
+| --- | --- | --- |
+| `ELITEA_TOKEN` | Read from `.env` at connect time by the `headersHelper` shell command. | `headersHelper` runs an arbitrary shell command whose JSON stdout is merged into request headers — so it can `grep .env` directly. |
+| `ELITEA_PROJECT_ID` | Read from **process env** at MCP-server startup via `${ELITEA_PROJECT_ID}` substitution. | Claude Code only does `${VAR}` substitution in `url` (no shell substitution, no `.env` reading). |
 
-This is the same `.env`-reading pattern used elsewhere in this marketplace (e.g. the mobitru entries in [`NoMyGov`](https://github.com/bermudas)).
+So `ELITEA_PROJECT_ID` needs to be in the shell environment when you launch Claude Code. Pick one:
+
+1. **direnv** — drop the same value into a `.envrc` (`export ELITEA_PROJECT_ID=15742`) and direnv auto-loads it when you `cd` into the project. Recommended if you already use direnv.
+2. **Source `.env` once per shell** — `set -a; source .env; set +a; claude`.
+3. **Export from your shell rc** — `export ELITEA_PROJECT_ID=15742` in `~/.zshrc` if you only ever use one project.
+
+If `ELITEA_PROJECT_ID` is missing, Claude Code will fail to parse the MCP config and `/mcp` will show `elitea-next` as failed.
+
+## Verify
+
+Inside Claude Code:
+
+```
+/mcp
+```
+
+You should see `elitea-next` listed and connected. A 401 means the token in `.env` is wrong or missing; a 404 means the project id is wrong.
 
 ## Verify
 

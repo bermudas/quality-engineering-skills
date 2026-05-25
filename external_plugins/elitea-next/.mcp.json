@@ -1,10 +1,7 @@
 {
   "elitea-next": {
-    "type": "stdio",
-    "command": "sh",
-    "args": [
-      "-c",
-      "ELITEA_PROJECT_ID=$(grep -m1 '^ELITEA_PROJECT_ID=' .env | cut -d= -f2-) ELITEA_TOKEN=$(grep -m1 '^ELITEA_TOKEN=' .env | cut -d= -f2-) exec npx -y mcp-remote@latest \"https://next.elitea.ai/app/${ELITEA_PROJECT_ID}/sse\" --header \"Authorization: Bearer ${ELITEA_TOKEN}\""
-    ]
+    "type": "sse",
+    "url": "https://next.elitea.ai/app/${ELITEA_PROJECT_ID}/sse",
+    "headersHelper": "printf '{\"Authorization\":\"Bearer %s\"}' $(grep -m1 '^ELITEA_TOKEN=' .env | cut -d= -f2-)"
   }
 }
