@@ -6,7 +6,7 @@ The `.mcp.json` references two values:
 
 | Value | Where it comes from | Default |
 | --- | --- | --- |
-| `ELITEA_PROJECT_ID` | Process env (`${ELITEA_PROJECT_ID:-15742}` in the URL). Override by exporting the var in your shell. | `15742` |
+| `ELITEA_PROJECT_ID` | Server-scoped `env` block in `.mcp.json` (defaults to `15742`). Override by editing `.mcp.json` or by exporting `ELITEA_PROJECT_ID` in your shell — process env wins if set. | `15742` |
 | `ELITEA_TOKEN` | Read from `.env` at connect time by `headersHelper` (a documented Claude Code field that runs a shell command and merges JSON stdout into headers). | none — required |
 
 ## Install
@@ -24,7 +24,7 @@ cp .env.example .env
 $EDITOR .env   # set ELITEA_TOKEN
 ```
 
-That's it — `.env` only needs `ELITEA_TOKEN`. The project id defaults to `15742` (my primary project). To point at a different project, export the var in your shell before launching Claude Code:
+That's it — `.env` only needs `ELITEA_TOKEN`. The project id defaults to `15742` (set in the `env` block inside `.mcp.json`). To point at a different project, either edit that block in `.mcp.json` or export the var in your shell before launching Claude Code:
 
 ```bash
 export ELITEA_PROJECT_ID=12345
