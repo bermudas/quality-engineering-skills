@@ -97,18 +97,18 @@ The current `.mcp.json` looks unusual on purpose. Three constraints drove its sh
 {
   "elitea-next": {
     "type": "sse",
-    "url": "https://next.elitea.ai/app/${ELITEA_PROJECT_ID}/sse",
-    "headersHelper": "printf '{\"Authorization\":\"Bearer %s\"}' $(grep -m1 '^ELITEA_TOKEN=' .env | cut -d= -f2-)",
-    "env": { "ELITEA_PROJECT_ID": "15742" }
+    "url": "https://next.elitea.ai/app/${ELITEA_PROJECT_ID:-630}/sse",
+    "headersHelper": "printf '{\"Authorization\":\"Bearer %s\"}' $(grep -m1 '^ELITEA_TOKEN=' .env | cut -d= -f2-)"
   }
 }
 ```
 
-1. **`url` only supports `${VAR}` substitution from process env, not shell command substitution and not `.env` reading.** That's why `ELITEA_PROJECT_ID` has to live in process env (or be defaulted via the server-scoped `env` block — which works on this SSE server in practice even though the docs describe `env` for stdio's spawned process).
-2. **`headersHelper` IS a documented Claude Code field** (see [docs](https://code.claude.com/docs/en/mcp#use-dynamic-headers-for-custom-authentication)). It runs an arbitrary shell command on each connect and merges its JSON-object stdout into request headers. That's the only way to get `.env` reading into header values — `url` and `env` can't do shell substitution.
+1. **`url` only supports `${VAR}` / `${VAR:-default}` substitution from process env — no shell command substitution and no `.env` reading.** That's why `ELITEA_PROJECT_ID` is baked in with a default (`630`) and overridable via the shell env.
+2. **`headersHelper` IS a documented Claude Code field** (see [docs](https://code.claude.com/docs/en/mcp#use-dynamic-headers-for-custom-authentication)). It runs an arbitrary shell command on each connect and merges its JSON-object stdout into request headers. That's the only way to get `.env` reading into header values — `url` can't do shell substitution.
 3. **`mcp-remote` as a stdio bridge was tried and rejected.** The user prefers the native SSE shape. Don't revert without checking.
+4. **A server-scoped `env` block was tried and removed.** `env` is documented for stdio's spawned process; on SSE it's not honored as a substitution namespace. The inline `${VAR:-default}` is the right idiom.
 
-If asked to "add an MCP that reads from `.env`": use the same shape. Token-in-`.env` → `headersHelper`. Numeric/static-ish config → server-scoped `env` block with a default + process-env override.
+If asked to "add an MCP that reads from `.env`": use the same shape. Token-in-`.env` → `headersHelper`. Numeric/static-ish config → `${VAR:-default}` inline in `url`, overridable via process env.
 
 ## CI workflows (`.github/workflows/`)
 

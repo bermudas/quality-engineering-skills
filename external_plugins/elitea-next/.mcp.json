@@ -1,10 +1,7 @@
 {
   "elitea-next": {
     "type": "sse",
-    "url": "https://next.elitea.ai/app/${ELITEA_PROJECT_ID}/sse",
-    "headersHelper": "printf '{\"Authorization\":\"Bearer %s\"}' $(grep -m1 '^ELITEA_TOKEN=' .env | cut -d= -f2-)",
-    "env": {
-      "ELITEA_PROJECT_ID": "15742"
-    }
+    "url": "https://next.elitea.ai/app/${ELITEA_PROJECT_ID:-630}/sse",
+    "headersHelper": "printf '{\"Authorization\":\"Bearer %s\"}' $(grep -m1 '^ELITEA_TOKEN=' .env | cut -d= -f2-)"
   }
 }
