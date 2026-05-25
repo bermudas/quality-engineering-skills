@@ -24,14 +24,13 @@ cp .env.example .env
 $EDITOR .env
 ```
 
-Then make sure Claude Code sees those variables when it starts. The simplest pattern is to source `.env` before launching:
+That's it — no need to `source` anything. The plugin's `.mcp.json` runs a small `sh -c` wrapper that:
 
-```bash
-set -a; source .env; set +a
-claude
-```
+1. `grep`s `ELITEA_PROJECT_ID` and `ELITEA_TOKEN` out of `./.env` (the project root where you launch Claude Code),
+2. Substitutes them into the ELITEA URL and `Authorization: Bearer` header,
+3. Bridges the SSE endpoint to stdio via [`mcp-remote`](https://www.npmjs.com/package/mcp-remote) so Claude Code can talk to it.
 
-`.mcp.json` substitutes `${ELITEA_PROJECT_ID}` and `${ELITEA_TOKEN}` from the process environment at MCP server startup.
+This is the same `.env`-reading pattern used elsewhere in this marketplace (e.g. the mobitru entries in [`NoMyGov`](https://github.com/bermudas)).
 
 ## Verify
 
