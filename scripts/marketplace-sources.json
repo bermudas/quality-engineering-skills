@@ -120,6 +120,18 @@
       "include": ["*"],
       "default_category": "testing",
       "author": {"name": "Alexander Bychinskiy", "url": "https://github.com/bermudas"}
+    },
+    {
+      "comment": "EliteaSkills — full ELITEA toolkit (bundle + 2 agents + 4 skills, drillable).",
+      "url": "https://github.com/bermudas/EliteaSkills.git",
+      "ref": "main",
+      "sha": "7237b867ddc6d2b3aaaad42fd2a3b2e733e2f1ef",
+      "include": ["*"],
+      "default_category": "ai-platform",
+      "category_overrides": {
+        "elitea-testing": "testing"
+      },
+      "author": {"name": "Alexander Bychinskiy", "url": "https://github.com/bermudas"}
     }
   ]
 }

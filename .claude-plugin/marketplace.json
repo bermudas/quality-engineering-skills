@@ -620,6 +620,124 @@
         "sha": "9007b9ba15760be3a090068be25d5824afeebe0e"
       },
       "homepage": "https://github.com/bermudas/servicenow-atf-skill/tree/main/skills/servicenow-atf-automation"
+    },
+    {
+      "name": "elitea-skills",
+      "description": "Full ELITEA toolkit \u2014 both agents and all four skills in one install.",
+      "author": {
+        "name": "Alexander Bychinskiy",
+        "url": "https://github.com/bermudas"
+      },
+      "category": "ai-platform",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/bermudas/EliteaSkills.git",
+        "ref": "main",
+        "sha": "7237b867ddc6d2b3aaaad42fd2a3b2e733e2f1ef"
+      },
+      "homepage": "https://github.com/bermudas/EliteaSkills"
+    },
+    {
+      "name": "elitea-builder",
+      "description": "ELITEA Builder agent \u2014 designs and deploys ELITEA-native artifacts (agents, pipelines, toolkits, credentials, version links).",
+      "author": {
+        "name": "Alexander Bychinskiy",
+        "url": "https://github.com/bermudas"
+      },
+      "category": "ai-platform",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/bermudas/EliteaSkills.git",
+        "path": "agents/elitea-builder",
+        "ref": "main",
+        "sha": "7237b867ddc6d2b3aaaad42fd2a3b2e733e2f1ef"
+      },
+      "homepage": "https://github.com/bermudas/EliteaSkills/tree/main/agents/elitea-builder"
+    },
+    {
+      "name": "elitea-integrator",
+      "description": "ELITEA Integrator agent \u2014 connects external systems to ELITEA via REST/MCP (GH Actions cron, Power Automate, Teams bots, Python/JS clients, webhook handlers).",
+      "author": {
+        "name": "Alexander Bychinskiy",
+        "url": "https://github.com/bermudas"
+      },
+      "category": "ai-platform",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/bermudas/EliteaSkills.git",
+        "path": "agents/elitea-integrator",
+        "ref": "main",
+        "sha": "7237b867ddc6d2b3aaaad42fd2a3b2e733e2f1ef"
+      },
+      "homepage": "https://github.com/bermudas/EliteaSkills/tree/main/agents/elitea-integrator"
+    },
+    {
+      "name": "elitea-platform",
+      "description": "Foundation: REST API conventions (v1/v2), auth, ID rules, secret placeholders, 21 built-in MCP tools, status codes, base URLs. Load first for any ELITEA work.",
+      "author": {
+        "name": "Alexander Bychinskiy",
+        "url": "https://github.com/bermudas"
+      },
+      "category": "ai-platform",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/bermudas/EliteaSkills.git",
+        "path": "skills/elitea-platform",
+        "ref": "main",
+        "sha": "7237b867ddc6d2b3aaaad42fd2a3b2e733e2f1ef"
+      },
+      "homepage": "https://github.com/bermudas/EliteaSkills/tree/main/skills/elitea-platform"
+    },
+    {
+      "name": "elitea-pipeline",
+      "description": "Pipeline YAML \u2014 schema for all 10 modern node types, state management, runtime helpers (elitea_client.auth_token, elitea_state), pattern catalog, real worked examples.",
+      "author": {
+        "name": "Alexander Bychinskiy",
+        "url": "https://github.com/bermudas"
+      },
+      "category": "ai-platform",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/bermudas/EliteaSkills.git",
+        "path": "skills/elitea-pipeline",
+        "ref": "main",
+        "sha": "7237b867ddc6d2b3aaaad42fd2a3b2e733e2f1ef"
+      },
+      "homepage": "https://github.com/bermudas/EliteaSkills/tree/main/skills/elitea-pipeline"
+    },
+    {
+      "name": "elitea-toolkit",
+      "description": "Toolkit types (OpenAPI, MCP, datasource, custom_python, application-as-tool), credentials linkage via {elitea_title, private} refs, real OpenAPI specs.",
+      "author": {
+        "name": "Alexander Bychinskiy",
+        "url": "https://github.com/bermudas"
+      },
+      "category": "ai-platform",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/bermudas/EliteaSkills.git",
+        "path": "skills/elitea-toolkit",
+        "ref": "main",
+        "sha": "7237b867ddc6d2b3aaaad42fd2a3b2e733e2f1ef"
+      },
+      "homepage": "https://github.com/bermudas/EliteaSkills/tree/main/skills/elitea-toolkit"
+    },
+    {
+      "name": "elitea-testing",
+      "description": "Run, predict, debug, schedule ELITEA artifacts. Includes nudge case study (full BUILD\u2192DEPLOY\u2192TEST\u2192SCHEDULE lifecycle) and update_agent.py script.",
+      "author": {
+        "name": "Alexander Bychinskiy",
+        "url": "https://github.com/bermudas"
+      },
+      "category": "testing",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/bermudas/EliteaSkills.git",
+        "path": "skills/elitea-testing",
+        "ref": "main",
+        "sha": "7237b867ddc6d2b3aaaad42fd2a3b2e733e2f1ef"
+      },
+      "homepage": "https://github.com/bermudas/EliteaSkills/tree/main/skills/elitea-testing"
     }
   ]
 }
