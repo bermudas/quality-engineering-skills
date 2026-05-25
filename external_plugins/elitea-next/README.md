@@ -2,12 +2,12 @@
 
 Connect Claude Code to an EPAM **ELITEA Next** project over SSE.
 
-The `.mcp.json` references two environment variables, so the same plugin works across multiple ELITEA projects and tenants without editing config:
+The `.mcp.json` references two values:
 
-| Variable | Source | Example |
+| Value | Where it comes from | Default |
 | --- | --- | --- |
-| `ELITEA_PROJECT_ID` | The numeric id in your ELITEA URL `https://next.elitea.ai/app/<ID>/sse` | `15742` |
-| `ELITEA_TOKEN` | Personal access token, generated in ELITEA → Profile → API Tokens | `eyJ...` |
+| `ELITEA_PROJECT_ID` | Process env (`${ELITEA_PROJECT_ID:-15742}` in the URL). Override by exporting the var in your shell. | `15742` |
+| `ELITEA_TOKEN` | Read from `.env` at connect time by `headersHelper` (a documented Claude Code field that runs a shell command and merges JSON stdout into headers). | none — required |
 
 ## Install
 
@@ -17,27 +17,28 @@ The `.mcp.json` references two environment variables, so the same plugin works a
 
 ## Configure
 
-Copy `.env.example` to `.env` in your project root:
+Copy `.env.example` to `.env` in your project root and drop in your token:
 
 ```bash
 cp .env.example .env
-$EDITOR .env
+$EDITOR .env   # set ELITEA_TOKEN
 ```
 
-The two values are loaded differently because Claude Code's `.mcp.json` semantics are different for each field:
+That's it — `.env` only needs `ELITEA_TOKEN`. The project id defaults to `15742` (my primary project). To point at a different project, export the var in your shell before launching Claude Code:
 
-| Variable | How it's loaded | Why |
-| --- | --- | --- |
-| `ELITEA_TOKEN` | Read from `.env` at connect time by the `headersHelper` shell command. | `headersHelper` runs an arbitrary shell command whose JSON stdout is merged into request headers — so it can `grep .env` directly. |
-| `ELITEA_PROJECT_ID` | Read from **process env** at MCP-server startup via `${ELITEA_PROJECT_ID}` substitution. | Claude Code only does `${VAR}` substitution in `url` (no shell substitution, no `.env` reading). |
+```bash
+export ELITEA_PROJECT_ID=12345
+claude
+```
 
-So `ELITEA_PROJECT_ID` needs to be in the shell environment when you launch Claude Code. Pick one:
+### Why ELITEA_PROJECT_ID isn't in `.env`
 
-1. **direnv** — drop the same value into a `.envrc` (`export ELITEA_PROJECT_ID=15742`) and direnv auto-loads it when you `cd` into the project. Recommended if you already use direnv.
-2. **Source `.env` once per shell** — `set -a; source .env; set +a; claude`.
-3. **Export from your shell rc** — `export ELITEA_PROJECT_ID=15742` in `~/.zshrc` if you only ever use one project.
+Claude Code's `.mcp.json` semantics differ by field:
 
-If `ELITEA_PROJECT_ID` is missing, Claude Code will fail to parse the MCP config and `/mcp` will show `elitea-next` as failed.
+- **`headersHelper`** runs an arbitrary shell command and merges its JSON stdout into request headers, so it can `grep .env` for the token directly.
+- **`url`** only supports `${VAR}` / `${VAR:-default}` substitution from process env — no shell substitution, no `.env` reading.
+
+So the token comes from `.env` (via `headersHelper`), and the project id comes from process env with a baked-in default. Putting `ELITEA_PROJECT_ID` in `.env` would have no effect.
 
 ## Verify
 
