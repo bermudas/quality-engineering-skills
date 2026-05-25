@@ -1,0 +1,125 @@
+{
+  "marketplace": {
+    "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+    "name": "quality-engineering-skills",
+    "description": "Curated marketplace of quality-engineering, test-automation, and SDLC plugins for Claude Code — ELITEA Next MCP, QA agents, test-framework skill bundles (qavajs, Vividus, Tosca, ServiceNow ATF), agent-evaluator, and the full sdlc-skills role-based agent toolkit drilled down into 30 installable plugins.",
+    "owner": {
+      "name": "Alexander Bychinskiy",
+      "url": "https://github.com/bermudas"
+    }
+  },
+  "local_plugins": [
+    {
+      "name": "elitea-next",
+      "source": "./external_plugins/elitea-next",
+      "description": "Connect Claude Code to an EPAM ELITEA Next project over SSE. Reads project id from a server-scoped env block and bearer token from a local .env file via headersHelper.",
+      "author": {"name": "Alexander Bychinskiy", "url": "https://github.com/bermudas"},
+      "category": "mcp",
+      "homepage": "https://elitea.ai"
+    },
+    {
+      "name": "qa-agent",
+      "source": "./external_plugins/qa-agent",
+      "description": "Composable QA agent for AI coding assistants — multi-specialist analysis, exploratory testing, accessibility, security, test generation, with a /qa-init onboarding pipeline. Wrapper around onetest-ai/qa-agent's npx installer.",
+      "author": {"name": "onetest-ai", "url": "https://github.com/onetest-ai"},
+      "category": "testing",
+      "homepage": "https://github.com/onetest-ai/qa-agent",
+      "upstream": {"url": "https://github.com/onetest-ai/qa-agent", "sha": "279b5926e071414ec10f8e27c16db5917a7b770b"}
+    },
+    {
+      "name": "agent-evaluator",
+      "source": "./external_plugins/agent-evaluator",
+      "description": "Evaluate AI agent specifications against the Agent Maturity Model (L0–L3, 39 practices across 9 categories) and produce a styled HTML maturity assessment report. Triggers on 'evaluate this agent', 'score these agents', 'how mature is X', 'audit the agent suite in folder Y'. Vendored from dshaplyko/skills.",
+      "author": {"name": "Dmitry Shaplyko", "url": "https://github.com/dshaplyko"},
+      "category": "agent-quality",
+      "homepage": "https://github.com/dshaplyko/skills/tree/main/.claude/skills/agent-evaluator",
+      "upstream": {"url": "https://github.com/dshaplyko/skills", "path": ".claude/skills/agent-evaluator", "sha": "a6082f46019d49300853c82e1359ff8feebe685c"}
+    },
+    {
+      "name": "qaspace-skill",
+      "source": "./external_plugins/qaspace-skill",
+      "description": "Agent skill for the EPAM qaspace Test Management Plugin on Jira Server/DC. Discover custom-field IDs, resolve test runs, build folder trees, triage runs for automation, paginate large runs, avoid plugin footguns. Transport-agnostic — MCP, REST, or curl.",
+      "author": {"name": "Alexander Bychinskiy", "url": "https://github.com/bermudas"},
+      "category": "test-management",
+      "homepage": "https://github.com/bermudas/qaspace-skill",
+      "upstream": {"url": "https://github.com/bermudas/qaspace-skill", "sha": "66934f7c34ea9419759145d1b377fe68c985de9a"}
+    },
+    {
+      "name": "qavajs-skill",
+      "source": "./external_plugins/qavajs-skill",
+      "description": "Agent skill for the qavajs BDD test-automation framework — 270 step patterns, full configuration and DSL reference, Playwright MCP bundled. Use when bootstrapping a qavajs project, authoring step definitions, or debugging test runs.",
+      "author": {"name": "Alexander Bychinskiy", "url": "https://github.com/bermudas"},
+      "category": "testing",
+      "homepage": "https://github.com/bermudas/qavajs-skill",
+      "upstream": {"url": "https://github.com/bermudas/qavajs-skill", "sha": "43579df1aa9994c85324a78e52e3132931d7d11c"}
+    },
+    {
+      "name": "vividus-skill",
+      "source": "./external_plugins/vividus-skill",
+      "description": "Agent skill for the Vividus test-automation framework — bootstrap a project, configure profiles and environments, author scenarios, run suites. Bundles a Playwright MCP for browser-driven steps.",
+      "author": {"name": "Alexander Bychinskiy", "url": "https://github.com/bermudas"},
+      "category": "testing",
+      "homepage": "https://github.com/bermudas/vividus-skill",
+      "upstream": {"url": "https://github.com/bermudas/vividus-skill", "sha": "d714914dc6168827040db4a27485769b57a4173d"}
+    },
+    {
+      "name": "tosca-tsu",
+      "source": "./external_plugins/tosca-tsu",
+      "description": "Bidirectional bridge between Tricentis Tosca .tsu test bundles and Playwright TypeScript specs. Generate .tsu from Playwright, parse .tsu into Playwright, drive the browser via Playwright MCP. Ships Claude Code skills plus Playwright MCP configs for VS Code, Copilot, and Copilot CLI.",
+      "author": {"name": "Alexander Bychinskiy", "url": "https://github.com/bermudas"},
+      "category": "testing",
+      "homepage": "https://github.com/bermudas/ToscaTSU",
+      "upstream": {"url": "https://github.com/bermudas/ToscaTSU", "sha": "338f4dd062f0bccf41e940dacc0b4ae4556a1a61"}
+    },
+    {
+      "name": "toscacloud-cli",
+      "source": "./external_plugins/toscacloud-cli",
+      "description": "AI-native CLI for Tricentis Tosca Cloud — bundles a Tosca Cloud MCP server, a Playwright MCP, and Claude Code skills that drive the CLI for creating, running, and inspecting cloud test executions.",
+      "author": {"name": "Alexander Bychinskiy", "url": "https://github.com/bermudas"},
+      "category": "testing",
+      "homepage": "https://github.com/bermudas/toscacloud_cli",
+      "upstream": {"url": "https://github.com/bermudas/toscacloud_cli", "sha": "f195b70c1711f41b478c887ed7d5b9c289e58a8c"}
+    }
+  ],
+  "upstream_marketplaces": [
+    {
+      "comment": "All plugins from sdlc-skills (umbrella + 29 sub-plugins).",
+      "url": "https://github.com/arozumenko/sdlc-skills.git",
+      "ref": "main",
+      "sha": "b827ebbd54c10003b696c1aca313c6c4d24f3b80",
+      "include": ["*"],
+      "category_overrides": {
+        "ba": "planning",
+        "plan-feature": "planning",
+        "qa-engineer": "testing",
+        "test-automation-engineer": "testing",
+        "qa-engineer-skills": "testing",
+        "browser-verify": "testing",
+        "playwright-testing": "testing",
+        "goal-verifier": "testing",
+        "test-case-analysis": "testing",
+        "test-automation-workflow": "testing",
+        "vividus": "testing",
+        "project-manager": "productivity",
+        "personal-assistant": "productivity",
+        "issue-tracking": "productivity",
+        "context-gatherer": "productivity",
+        "memory": "productivity",
+        "msgraph": "productivity",
+        "obsidian-vault": "productivity",
+        "deep-research": "research"
+      },
+      "default_category": "development",
+      "author": {"name": "Artem Rozumenko", "url": "https://github.com/arozumenko"}
+    },
+    {
+      "comment": "ServiceNow ATF skill (single sub-plugin in upstream marketplace).",
+      "url": "https://github.com/bermudas/servicenow-atf-skill.git",
+      "ref": "main",
+      "sha": "9007b9ba15760be3a090068be25d5824afeebe0e",
+      "include": ["*"],
+      "default_category": "testing",
+      "author": {"name": "Alexander Bychinskiy", "url": "https://github.com/bermudas"}
+    }
+  ]
+}

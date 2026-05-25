@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "quality-engineering-skills",
-  "description": "Curated marketplace of quality-engineering, test-automation, and SDLC plugins for Claude Code — ELITEA Next MCP, QA agents, test-framework skill bundles (qavajs, Vividus, Tosca), and the SDLC role-based agent toolkit.",
+  "description": "Curated marketplace of quality-engineering, test-automation, and SDLC plugins for Claude Code \u2014 ELITEA Next MCP, QA agents, test-framework skill bundles (qavajs, Vividus, Tosca, ServiceNow ATF), agent-evaluator, and the full sdlc-skills role-based agent toolkit drilled down into 30 installable plugins.",
   "owner": {
     "name": "Alexander Bychinskiy",
     "url": "https://github.com/bermudas"
@@ -9,33 +9,95 @@
   "plugins": [
     {
       "name": "elitea-next",
-      "description": "Connect Claude Code to an EPAM ELITEA Next project over SSE. Reads project id and bearer token from a local .env file so the same plugin works across multiple projects/tenants without editing config.",
+      "source": "./external_plugins/elitea-next",
+      "description": "Connect Claude Code to an EPAM ELITEA Next project over SSE. Reads project id from a server-scoped env block and bearer token from a local .env file via headersHelper.",
       "author": {
         "name": "Alexander Bychinskiy",
         "url": "https://github.com/bermudas"
       },
       "category": "mcp",
-      "source": "./external_plugins/elitea-next",
       "homepage": "https://elitea.ai"
     },
     {
       "name": "qa-agent",
-      "description": "Composable QA agent for AI coding assistants — multi-specialist analysis, exploratory testing, accessibility, security, test generation, with a /qa-init onboarding pipeline. Wrapper around onetest-ai/qa-agent's npx installer.",
+      "source": "./external_plugins/qa-agent",
+      "description": "Composable QA agent for AI coding assistants \u2014 multi-specialist analysis, exploratory testing, accessibility, security, test generation, with a /qa-init onboarding pipeline. Wrapper around onetest-ai/qa-agent's npx installer.",
       "author": {
         "name": "onetest-ai",
         "url": "https://github.com/onetest-ai"
       },
       "category": "testing",
-      "source": "./external_plugins/qa-agent",
-      "homepage": "https://github.com/onetest-ai/qa-agent",
-      "upstream": {
-        "url": "https://github.com/onetest-ai/qa-agent",
-        "sha": "279b5926e071414ec10f8e27c16db5917a7b770b"
-      }
+      "homepage": "https://github.com/onetest-ai/qa-agent"
+    },
+    {
+      "name": "agent-evaluator",
+      "source": "./external_plugins/agent-evaluator",
+      "description": "Evaluate AI agent specifications against the Agent Maturity Model (L0\u2013L3, 39 practices across 9 categories) and produce a styled HTML maturity assessment report. Triggers on 'evaluate this agent', 'score these agents', 'how mature is X', 'audit the agent suite in folder Y'. Vendored from dshaplyko/skills.",
+      "author": {
+        "name": "Dmitry Shaplyko",
+        "url": "https://github.com/dshaplyko"
+      },
+      "category": "agent-quality",
+      "homepage": "https://github.com/dshaplyko/skills/tree/main/.claude/skills/agent-evaluator"
+    },
+    {
+      "name": "qaspace-skill",
+      "source": "./external_plugins/qaspace-skill",
+      "description": "Agent skill for the EPAM qaspace Test Management Plugin on Jira Server/DC. Discover custom-field IDs, resolve test runs, build folder trees, triage runs for automation, paginate large runs, avoid plugin footguns. Transport-agnostic \u2014 MCP, REST, or curl.",
+      "author": {
+        "name": "Alexander Bychinskiy",
+        "url": "https://github.com/bermudas"
+      },
+      "category": "test-management",
+      "homepage": "https://github.com/bermudas/qaspace-skill"
+    },
+    {
+      "name": "qavajs-skill",
+      "source": "./external_plugins/qavajs-skill",
+      "description": "Agent skill for the qavajs BDD test-automation framework \u2014 270 step patterns, full configuration and DSL reference, Playwright MCP bundled. Use when bootstrapping a qavajs project, authoring step definitions, or debugging test runs.",
+      "author": {
+        "name": "Alexander Bychinskiy",
+        "url": "https://github.com/bermudas"
+      },
+      "category": "testing",
+      "homepage": "https://github.com/bermudas/qavajs-skill"
+    },
+    {
+      "name": "vividus-skill",
+      "source": "./external_plugins/vividus-skill",
+      "description": "Agent skill for the Vividus test-automation framework \u2014 bootstrap a project, configure profiles and environments, author scenarios, run suites. Bundles a Playwright MCP for browser-driven steps.",
+      "author": {
+        "name": "Alexander Bychinskiy",
+        "url": "https://github.com/bermudas"
+      },
+      "category": "testing",
+      "homepage": "https://github.com/bermudas/vividus-skill"
+    },
+    {
+      "name": "tosca-tsu",
+      "source": "./external_plugins/tosca-tsu",
+      "description": "Bidirectional bridge between Tricentis Tosca .tsu test bundles and Playwright TypeScript specs. Generate .tsu from Playwright, parse .tsu into Playwright, drive the browser via Playwright MCP. Ships Claude Code skills plus Playwright MCP configs for VS Code, Copilot, and Copilot CLI.",
+      "author": {
+        "name": "Alexander Bychinskiy",
+        "url": "https://github.com/bermudas"
+      },
+      "category": "testing",
+      "homepage": "https://github.com/bermudas/ToscaTSU"
+    },
+    {
+      "name": "toscacloud-cli",
+      "source": "./external_plugins/toscacloud-cli",
+      "description": "AI-native CLI for Tricentis Tosca Cloud \u2014 bundles a Tosca Cloud MCP server, a Playwright MCP, and Claude Code skills that drive the CLI for creating, running, and inspecting cloud test executions.",
+      "author": {
+        "name": "Alexander Bychinskiy",
+        "url": "https://github.com/bermudas"
+      },
+      "category": "testing",
+      "homepage": "https://github.com/bermudas/toscacloud_cli"
     },
     {
       "name": "sdlc-skills",
-      "description": "Bundled SDLC toolkit for Claude Code: role-based agents (BA, Tech Lead, PM, Python/JS/iOS devs, QA, Personal Assistant) and composable skills (bug-fix, feature planning, feature implementation, project seeding, code review, TDD). Use when orchestrating an AI development team or when you want structured SDLC workflows.",
+      "description": "Full SDLC toolkit \u2014 all agents and skills in one install.",
       "author": {
         "name": "Artem Rozumenko",
         "url": "https://github.com/arozumenko"
@@ -50,111 +112,514 @@
       "homepage": "https://github.com/arozumenko/sdlc-skills"
     },
     {
-      "name": "servicenow-atf-skill",
-      "description": "Create, run, and inspect ServiceNow Automated Test Framework (ATF) tests programmatically. Two paths: the official @servicenow/sdk Fluent toolchain (.now.ts → now-sdk build/install) and a zero-install Scripted-REST builder (Path B) that bypasses the platform's glide_var Table-API filter on sys_atf_step.inputs. Universal batching rule: keep UI steps contiguous; batch server steps strictly before/after.",
+      "name": "ba",
+      "description": "Business analyst agent \u2014 turns vague ideas into user stories with acceptance criteria.",
+      "author": {
+        "name": "Artem Rozumenko",
+        "url": "https://github.com/arozumenko"
+      },
+      "category": "planning",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/arozumenko/sdlc-skills.git",
+        "path": "agents/ba",
+        "ref": "main",
+        "sha": "b827ebbd54c10003b696c1aca313c6c4d24f3b80"
+      },
+      "homepage": "https://github.com/arozumenko/sdlc-skills/tree/main/agents/ba"
+    },
+    {
+      "name": "tech-lead",
+      "description": "Tech lead agent \u2014 decomposes stories into dependency-ordered tasks, owns architecture decisions and code review.",
+      "author": {
+        "name": "Artem Rozumenko",
+        "url": "https://github.com/arozumenko"
+      },
+      "category": "development",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/arozumenko/sdlc-skills.git",
+        "path": "agents/tech-lead",
+        "ref": "main",
+        "sha": "b827ebbd54c10003b696c1aca313c6c4d24f3b80"
+      },
+      "homepage": "https://github.com/arozumenko/sdlc-skills/tree/main/agents/tech-lead"
+    },
+    {
+      "name": "project-manager",
+      "description": "Project manager agent \u2014 routes tasks to developers, coordinates team progress, owns the merge gate.",
+      "author": {
+        "name": "Artem Rozumenko",
+        "url": "https://github.com/arozumenko"
+      },
+      "category": "productivity",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/arozumenko/sdlc-skills.git",
+        "path": "agents/project-manager",
+        "ref": "main",
+        "sha": "b827ebbd54c10003b696c1aca313c6c4d24f3b80"
+      },
+      "homepage": "https://github.com/arozumenko/sdlc-skills/tree/main/agents/project-manager"
+    },
+    {
+      "name": "python-dev",
+      "description": "Python developer agent \u2014 implements Django, FastAPI, Flask services with TDD.",
+      "author": {
+        "name": "Artem Rozumenko",
+        "url": "https://github.com/arozumenko"
+      },
+      "category": "development",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/arozumenko/sdlc-skills.git",
+        "path": "agents/python-dev",
+        "ref": "main",
+        "sha": "b827ebbd54c10003b696c1aca313c6c4d24f3b80"
+      },
+      "homepage": "https://github.com/arozumenko/sdlc-skills/tree/main/agents/python-dev"
+    },
+    {
+      "name": "js-dev",
+      "description": "JavaScript/TypeScript developer agent \u2014 React, Next.js, Node services with TDD.",
+      "author": {
+        "name": "Artem Rozumenko",
+        "url": "https://github.com/arozumenko"
+      },
+      "category": "development",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/arozumenko/sdlc-skills.git",
+        "path": "agents/js-dev",
+        "ref": "main",
+        "sha": "b827ebbd54c10003b696c1aca313c6c4d24f3b80"
+      },
+      "homepage": "https://github.com/arozumenko/sdlc-skills/tree/main/agents/js-dev"
+    },
+    {
+      "name": "ios-dev",
+      "description": "iOS/Swift developer agent \u2014 SwiftUI, SwiftData, Swift Testing with TDD and no-simulator discipline.",
+      "author": {
+        "name": "Artem Rozumenko",
+        "url": "https://github.com/arozumenko"
+      },
+      "category": "development",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/arozumenko/sdlc-skills.git",
+        "path": "agents/ios-dev",
+        "ref": "main",
+        "sha": "b827ebbd54c10003b696c1aca313c6c4d24f3b80"
+      },
+      "homepage": "https://github.com/arozumenko/sdlc-skills/tree/main/agents/ios-dev"
+    },
+    {
+      "name": "qa-engineer",
+      "description": "QA engineer agent \u2014 verifies features, reproduces bugs, writes E2E tests via Playwright.",
+      "author": {
+        "name": "Artem Rozumenko",
+        "url": "https://github.com/arozumenko"
+      },
+      "category": "testing",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/arozumenko/sdlc-skills.git",
+        "path": "agents/qa-engineer",
+        "ref": "main",
+        "sha": "b827ebbd54c10003b696c1aca313c6c4d24f3b80"
+      },
+      "homepage": "https://github.com/arozumenko/sdlc-skills/tree/main/agents/qa-engineer"
+    },
+    {
+      "name": "test-automation-engineer",
+      "description": "Test automation engineer agent \u2014 turns automation-ready specs into green tests inside the project's existing framework (Playwright, Cypress, pytest, JUnit, NUnit, WDIO).",
+      "author": {
+        "name": "Artem Rozumenko",
+        "url": "https://github.com/arozumenko"
+      },
+      "category": "testing",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/arozumenko/sdlc-skills.git",
+        "path": "agents/test-automation-engineer",
+        "ref": "main",
+        "sha": "b827ebbd54c10003b696c1aca313c6c4d24f3b80"
+      },
+      "homepage": "https://github.com/arozumenko/sdlc-skills/tree/main/agents/test-automation-engineer"
+    },
+    {
+      "name": "scout",
+      "description": "Codebase scout agent \u2014 maps unfamiliar repos, generates CLAUDE.md and project configuration.",
+      "author": {
+        "name": "Artem Rozumenko",
+        "url": "https://github.com/arozumenko"
+      },
+      "category": "development",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/arozumenko/sdlc-skills.git",
+        "path": "agents/scout",
+        "ref": "main",
+        "sha": "b827ebbd54c10003b696c1aca313c6c4d24f3b80"
+      },
+      "homepage": "https://github.com/arozumenko/sdlc-skills/tree/main/agents/scout"
+    },
+    {
+      "name": "personal-assistant",
+      "description": "Personal assistant agent \u2014 email, calendar, Teams, notes, and daily briefings.",
+      "author": {
+        "name": "Artem Rozumenko",
+        "url": "https://github.com/arozumenko"
+      },
+      "category": "productivity",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/arozumenko/sdlc-skills.git",
+        "path": "agents/personal-assistant",
+        "ref": "main",
+        "sha": "b827ebbd54c10003b696c1aca313c6c4d24f3b80"
+      },
+      "homepage": "https://github.com/arozumenko/sdlc-skills/tree/main/agents/personal-assistant"
+    },
+    {
+      "name": "bugfix-workflow",
+      "description": "End-to-end bugfix workflow: reproduce \u2192 root cause \u2192 fix \u2192 regression test.",
+      "author": {
+        "name": "Artem Rozumenko",
+        "url": "https://github.com/arozumenko"
+      },
+      "category": "development",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/arozumenko/sdlc-skills.git",
+        "path": "skills/bugfix-workflow",
+        "ref": "main",
+        "sha": "b827ebbd54c10003b696c1aca313c6c4d24f3b80"
+      },
+      "homepage": "https://github.com/arozumenko/sdlc-skills/tree/main/skills/bugfix-workflow"
+    },
+    {
+      "name": "plan-feature",
+      "description": "Structured feature planning: requirements, investigation, feasibility, implementation plan.",
+      "author": {
+        "name": "Artem Rozumenko",
+        "url": "https://github.com/arozumenko"
+      },
+      "category": "planning",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/arozumenko/sdlc-skills.git",
+        "path": "skills/plan-feature",
+        "ref": "main",
+        "sha": "b827ebbd54c10003b696c1aca313c6c4d24f3b80"
+      },
+      "homepage": "https://github.com/arozumenko/sdlc-skills/tree/main/skills/plan-feature"
+    },
+    {
+      "name": "implement-feature",
+      "description": "Feature implementation workflow: plan review, tests, implementation, verification, delivery.",
+      "author": {
+        "name": "Artem Rozumenko",
+        "url": "https://github.com/arozumenko"
+      },
+      "category": "development",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/arozumenko/sdlc-skills.git",
+        "path": "skills/implement-feature",
+        "ref": "main",
+        "sha": "b827ebbd54c10003b696c1aca313c6c4d24f3b80"
+      },
+      "homepage": "https://github.com/arozumenko/sdlc-skills/tree/main/skills/implement-feature"
+    },
+    {
+      "name": "code-review",
+      "description": "Structured code review for correctness, security, performance, and maintainability.",
+      "author": {
+        "name": "Artem Rozumenko",
+        "url": "https://github.com/arozumenko"
+      },
+      "category": "development",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/arozumenko/sdlc-skills.git",
+        "path": "skills/code-review",
+        "ref": "main",
+        "sha": "b827ebbd54c10003b696c1aca313c6c4d24f3b80"
+      },
+      "homepage": "https://github.com/arozumenko/sdlc-skills/tree/main/skills/code-review"
+    },
+    {
+      "name": "git-workflow",
+      "description": "Git operations: branching, commits, PRs, rebasing, cherry-picks, releases.",
+      "author": {
+        "name": "Artem Rozumenko",
+        "url": "https://github.com/arozumenko"
+      },
+      "category": "development",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/arozumenko/sdlc-skills.git",
+        "path": "skills/git-workflow",
+        "ref": "main",
+        "sha": "b827ebbd54c10003b696c1aca313c6c4d24f3b80"
+      },
+      "homepage": "https://github.com/arozumenko/sdlc-skills/tree/main/skills/git-workflow"
+    },
+    {
+      "name": "browser-verify",
+      "description": "Chrome DevTools Protocol browser automation \u2014 inspect, click, screenshot, verify UI.",
+      "author": {
+        "name": "Artem Rozumenko",
+        "url": "https://github.com/arozumenko"
+      },
+      "category": "testing",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/arozumenko/sdlc-skills.git",
+        "path": "skills/browser-verify",
+        "ref": "main",
+        "sha": "b827ebbd54c10003b696c1aca313c6c4d24f3b80"
+      },
+      "homepage": "https://github.com/arozumenko/sdlc-skills/tree/main/skills/browser-verify"
+    },
+    {
+      "name": "playwright-testing",
+      "description": "UI/E2E test automation with Playwright MCP.",
+      "author": {
+        "name": "Artem Rozumenko",
+        "url": "https://github.com/arozumenko"
+      },
+      "category": "testing",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/arozumenko/sdlc-skills.git",
+        "path": "skills/playwright-testing",
+        "ref": "main",
+        "sha": "b827ebbd54c10003b696c1aca313c6c4d24f3b80"
+      },
+      "homepage": "https://github.com/arozumenko/sdlc-skills/tree/main/skills/playwright-testing"
+    },
+    {
+      "name": "issue-tracking",
+      "description": "Create and manage issues in GitHub, Linear, or GitLab.",
+      "author": {
+        "name": "Artem Rozumenko",
+        "url": "https://github.com/arozumenko"
+      },
+      "category": "productivity",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/arozumenko/sdlc-skills.git",
+        "path": "skills/issue-tracking",
+        "ref": "main",
+        "sha": "b827ebbd54c10003b696c1aca313c6c4d24f3b80"
+      },
+      "homepage": "https://github.com/arozumenko/sdlc-skills/tree/main/skills/issue-tracking"
+    },
+    {
+      "name": "deep-research",
+      "description": "Checkpointed research workflow \u2014 trend research, topic analysis, fact-checking.",
+      "author": {
+        "name": "Artem Rozumenko",
+        "url": "https://github.com/arozumenko"
+      },
+      "category": "research",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/arozumenko/sdlc-skills.git",
+        "path": "skills/deep-research",
+        "ref": "main",
+        "sha": "b827ebbd54c10003b696c1aca313c6c4d24f3b80"
+      },
+      "homepage": "https://github.com/arozumenko/sdlc-skills/tree/main/skills/deep-research"
+    },
+    {
+      "name": "context-gatherer",
+      "description": "Cross-channel context gathering \u2014 local KB, email, Teams, web \u2014 before responding.",
+      "author": {
+        "name": "Artem Rozumenko",
+        "url": "https://github.com/arozumenko"
+      },
+      "category": "productivity",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/arozumenko/sdlc-skills.git",
+        "path": "skills/context-gatherer",
+        "ref": "main",
+        "sha": "b827ebbd54c10003b696c1aca313c6c4d24f3b80"
+      },
+      "homepage": "https://github.com/arozumenko/sdlc-skills/tree/main/skills/context-gatherer"
+    },
+    {
+      "name": "goal-verifier",
+      "description": "Goal-backward verification \u2014 checks whether the desired outcome was actually achieved.",
+      "author": {
+        "name": "Artem Rozumenko",
+        "url": "https://github.com/arozumenko"
+      },
+      "category": "testing",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/arozumenko/sdlc-skills.git",
+        "path": "skills/goal-verifier",
+        "ref": "main",
+        "sha": "b827ebbd54c10003b696c1aca313c6c4d24f3b80"
+      },
+      "homepage": "https://github.com/arozumenko/sdlc-skills/tree/main/skills/goal-verifier"
+    },
+    {
+      "name": "memory",
+      "description": "Per-role persistent memory \u2014 facts, preferences, decisions, and daily log as plain markdown.",
+      "author": {
+        "name": "Artem Rozumenko",
+        "url": "https://github.com/arozumenko"
+      },
+      "category": "productivity",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/arozumenko/sdlc-skills.git",
+        "path": "skills/memory",
+        "ref": "main",
+        "sha": "b827ebbd54c10003b696c1aca313c6c4d24f3b80"
+      },
+      "homepage": "https://github.com/arozumenko/sdlc-skills/tree/main/skills/memory"
+    },
+    {
+      "name": "msgraph",
+      "description": "Microsoft 365 integration \u2014 email, Teams, calendar, SharePoint via Graph API.",
+      "author": {
+        "name": "Artem Rozumenko",
+        "url": "https://github.com/arozumenko"
+      },
+      "category": "productivity",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/arozumenko/sdlc-skills.git",
+        "path": "skills/msgraph",
+        "ref": "main",
+        "sha": "b827ebbd54c10003b696c1aca313c6c4d24f3b80"
+      },
+      "homepage": "https://github.com/arozumenko/sdlc-skills/tree/main/skills/msgraph"
+    },
+    {
+      "name": "obsidian-vault",
+      "description": "Headless Obsidian vault operations \u2014 create, search, and file notes without the app.",
+      "author": {
+        "name": "Artem Rozumenko",
+        "url": "https://github.com/arozumenko"
+      },
+      "category": "productivity",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/arozumenko/sdlc-skills.git",
+        "path": "skills/obsidian-vault",
+        "ref": "main",
+        "sha": "b827ebbd54c10003b696c1aca313c6c4d24f3b80"
+      },
+      "homepage": "https://github.com/arozumenko/sdlc-skills/tree/main/skills/obsidian-vault"
+    },
+    {
+      "name": "project-seeder",
+      "description": "Generate AGENTS.md, .agents/ project docs, and per-role memory briefings after codebase exploration.",
+      "author": {
+        "name": "Artem Rozumenko",
+        "url": "https://github.com/arozumenko"
+      },
+      "category": "development",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/arozumenko/sdlc-skills.git",
+        "path": "skills/project-seeder",
+        "ref": "main",
+        "sha": "b827ebbd54c10003b696c1aca313c6c4d24f3b80"
+      },
+      "homepage": "https://github.com/arozumenko/sdlc-skills/tree/main/skills/project-seeder"
+    },
+    {
+      "name": "task-completion",
+      "description": "Five-step task handoff protocol: commit \u2192 push \u2192 PR \u2192 comment \u2192 notify.",
+      "author": {
+        "name": "Artem Rozumenko",
+        "url": "https://github.com/arozumenko"
+      },
+      "category": "development",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/arozumenko/sdlc-skills.git",
+        "path": "skills/task-completion",
+        "ref": "main",
+        "sha": "b827ebbd54c10003b696c1aca313c6c4d24f3b80"
+      },
+      "homepage": "https://github.com/arozumenko/sdlc-skills/tree/main/skills/task-completion"
+    },
+    {
+      "name": "test-case-analysis",
+      "description": "Execute a TMS test case end-to-end, capture stable selectors, flag defects, and emit an Automation-Friendly Spec (AFS). Used by qa-engineer. Does not write automation code.",
+      "author": {
+        "name": "Artem Rozumenko",
+        "url": "https://github.com/arozumenko"
+      },
+      "category": "testing",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/arozumenko/sdlc-skills.git",
+        "path": "skills/test-case-analysis",
+        "ref": "main",
+        "sha": "b827ebbd54c10003b696c1aca313c6c4d24f3b80"
+      },
+      "homepage": "https://github.com/arozumenko/sdlc-skills/tree/main/skills/test-case-analysis"
+    },
+    {
+      "name": "test-automation-workflow",
+      "description": "End-to-end test automation workflow: explore \u2192 specify \u2192 implement \u2192 review. Pluggable TMS adapters (Zephyr Scale, TestRail, Xray, Azure Test Plans, markdown).",
+      "author": {
+        "name": "Artem Rozumenko",
+        "url": "https://github.com/arozumenko"
+      },
+      "category": "testing",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/arozumenko/sdlc-skills.git",
+        "path": "skills/test-automation-workflow",
+        "ref": "main",
+        "sha": "b827ebbd54c10003b696c1aca313c6c4d24f3b80"
+      },
+      "homepage": "https://github.com/arozumenko/sdlc-skills/tree/main/skills/test-automation-workflow"
+    },
+    {
+      "name": "vividus",
+      "description": "Bootstrap, configure, and author tests for the Vividus BDD framework \u2014 JBehave-based .story files with 47+ plugins (web, REST, mobile, DB, messaging, AWS/Azure, visual, accessibility), BOM-pinned versions, suite/profile/environment configuration.",
+      "author": {
+        "name": "Artem Rozumenko",
+        "url": "https://github.com/arozumenko"
+      },
+      "category": "testing",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/arozumenko/sdlc-skills.git",
+        "path": "skills/vividus",
+        "ref": "main",
+        "sha": "b827ebbd54c10003b696c1aca313c6c4d24f3b80"
+      },
+      "homepage": "https://github.com/arozumenko/sdlc-skills/tree/main/skills/vividus"
+    },
+    {
+      "name": "servicenow-atf-automation",
+      "description": "ServiceNow ATF: Fluent SDK (now-sdk build/install) + Path B Scripted REST builder for glide_var step inputs. Create / run / inspect sys_atf_test programmatically.",
       "author": {
         "name": "Alexander Bychinskiy",
         "url": "https://github.com/bermudas"
       },
       "category": "testing",
       "source": {
-        "source": "url",
+        "source": "git-subdir",
         "url": "https://github.com/bermudas/servicenow-atf-skill.git",
+        "path": "skills/servicenow-atf-automation",
         "ref": "main",
         "sha": "9007b9ba15760be3a090068be25d5824afeebe0e"
       },
-      "homepage": "https://github.com/bermudas/servicenow-atf-skill"
-    },
-    {
-      "name": "agent-evaluator",
-      "description": "Evaluate AI agent specifications against the Agent Maturity Model (L0–L3, 39 practices across 9 categories) and produce a styled HTML maturity assessment report. Triggers on 'evaluate this agent', 'score these agents', 'how mature is X', 'audit the agent suite in folder Y'. Vendored from dshaplyko/skills.",
-      "author": {
-        "name": "Dmitry Shaplyko",
-        "url": "https://github.com/dshaplyko"
-      },
-      "category": "agent-quality",
-      "source": "./external_plugins/agent-evaluator",
-      "homepage": "https://github.com/dshaplyko/skills/tree/main/.claude/skills/agent-evaluator",
-      "upstream": {
-        "url": "https://github.com/dshaplyko/skills",
-        "path": ".claude/skills/agent-evaluator",
-        "sha": "a6082f46019d49300853c82e1359ff8feebe685c"
-      }
-    },
-    {
-      "name": "qaspace-skill",
-      "description": "Agent skill for the EPAM qaspace Test Management Plugin on Jira Server/DC. Discover custom-field IDs, resolve test runs, build folder trees, triage runs for automation, paginate large runs, avoid plugin footguns. Transport-agnostic — MCP, REST, or curl.",
-      "author": {
-        "name": "Alexander Bychinskiy",
-        "url": "https://github.com/bermudas"
-      },
-      "category": "test-management",
-      "source": "./external_plugins/qaspace-skill",
-      "homepage": "https://github.com/bermudas/qaspace-skill",
-      "upstream": {
-        "url": "https://github.com/bermudas/qaspace-skill",
-        "sha": "66934f7c34ea9419759145d1b377fe68c985de9a"
-      }
-    },
-    {
-      "name": "qavajs-skill",
-      "description": "Agent skill for the qavajs BDD test-automation framework — 270 step patterns, full configuration and DSL reference, Playwright MCP bundled. Use when bootstrapping a qavajs project, authoring step definitions, or debugging test runs.",
-      "author": {
-        "name": "Alexander Bychinskiy",
-        "url": "https://github.com/bermudas"
-      },
-      "category": "testing",
-      "source": "./external_plugins/qavajs-skill",
-      "homepage": "https://github.com/bermudas/qavajs-skill",
-      "upstream": {
-        "url": "https://github.com/bermudas/qavajs-skill",
-        "sha": "43579df1aa9994c85324a78e52e3132931d7d11c"
-      }
-    },
-    {
-      "name": "vividus-skill",
-      "description": "Agent skill for the Vividus test-automation framework — bootstrap a project, configure profiles and environments, author scenarios, run suites. Bundles a Playwright MCP for browser-driven steps.",
-      "author": {
-        "name": "Alexander Bychinskiy",
-        "url": "https://github.com/bermudas"
-      },
-      "category": "testing",
-      "source": "./external_plugins/vividus-skill",
-      "homepage": "https://github.com/bermudas/vividus-skill",
-      "upstream": {
-        "url": "https://github.com/bermudas/vividus-skill",
-        "sha": "d714914dc6168827040db4a27485769b57a4173d"
-      }
-    },
-    {
-      "name": "tosca-tsu",
-      "description": "Bidirectional bridge between Tricentis Tosca .tsu test bundles and Playwright TypeScript specs. Generate .tsu from Playwright, parse .tsu into Playwright, drive the browser via Playwright MCP. Ships Claude Code skills plus Playwright MCP configs for VS Code, Copilot, and Copilot CLI.",
-      "author": {
-        "name": "Alexander Bychinskiy",
-        "url": "https://github.com/bermudas"
-      },
-      "category": "testing",
-      "source": "./external_plugins/tosca-tsu",
-      "homepage": "https://github.com/bermudas/ToscaTSU",
-      "upstream": {
-        "url": "https://github.com/bermudas/ToscaTSU",
-        "sha": "338f4dd062f0bccf41e940dacc0b4ae4556a1a61"
-      }
-    },
-    {
-      "name": "toscacloud-cli",
-      "description": "AI-native CLI for Tricentis Tosca Cloud — bundles a Tosca Cloud MCP server, a Playwright MCP, and Claude Code skills that drive the CLI for creating, running, and inspecting cloud test executions.",
-      "author": {
-        "name": "Alexander Bychinskiy",
-        "url": "https://github.com/bermudas"
-      },
-      "category": "testing",
-      "source": "./external_plugins/toscacloud-cli",
-      "homepage": "https://github.com/bermudas/toscacloud_cli",
-      "upstream": {
-        "url": "https://github.com/bermudas/toscacloud_cli",
-        "sha": "f195b70c1711f41b478c887ed7d5b9c289e58a8c"
-      }
+      "homepage": "https://github.com/bermudas/servicenow-atf-skill/tree/main/skills/servicenow-atf-automation"
     }
   ]
 }

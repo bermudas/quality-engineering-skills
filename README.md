@@ -63,13 +63,27 @@ plugin-name/
 
 Wrapper plugins under `/external_plugins` are deliberately thin. The wrapper carries the marketplace metadata and a `.mcp.json` when relevant; the actual skill content is installed from the upstream repo via the `npx … init` command documented in each wrapper's README.
 
+## Regenerating `marketplace.json`
+
+`.claude-plugin/marketplace.json` is **generated**. Don't edit it by hand — edit [`scripts/marketplace-sources.json`](scripts/marketplace-sources.json) and run:
+
+```bash
+python3 scripts/build-marketplace.py
+```
+
+The script fetches each upstream marketplace's `.claude-plugin/marketplace.json` at the pinned SHA and inlines every plugin entry as a `git-subdir` (or `url`) source — so drill-down works from this marketplace. To refresh an upstream, bump its `sha` in `marketplace-sources.json` and rerun the script. Validate the result with:
+
+```bash
+claude plugin validate .
+```
+
 ## Contributing
 
 Want to add a plugin? Open a PR that:
 
 1. Adds a directory under `/plugins` (authored here) or `/external_plugins` (wrapper around an upstream repo).
 2. Includes a `.claude-plugin/plugin.json` and a `README.md`.
-3. Adds an entry to `.claude-plugin/marketplace.json` — pin external `source: "url"` and `source: "git-subdir"` entries to a specific `sha` so installs are reproducible.
+3. Adds an entry to [`scripts/marketplace-sources.json`](scripts/marketplace-sources.json) (a local plugin in `local_plugins`, or a new `upstream_marketplaces` block to mirror another marketplace) and reruns the build script.
 
 ## License
 
